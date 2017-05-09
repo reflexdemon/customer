@@ -13,27 +13,4 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" >
     </ListView>
-    <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content">-->
-            <!--<ListView-->
-            <!--android:id="@+id/customerListView"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--&gt;-->
-                <!--<TextView-->
-                    <!--android:id="@+id/id"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent" />-->
-                <!--<TextView-->
-                    <!--android:id="@+id/name"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent" />-->
-                <!--<TextView-->
-                    <!--android:id="@+id/age"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent" />-->
-        <!--</ListView>-->
-    <!--</LinearLayout>-->
-
 </RelativeLayout>
