@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MyCustomerApp</string>
+    <string name="getData">Fetch Data</string>
+</resources>
