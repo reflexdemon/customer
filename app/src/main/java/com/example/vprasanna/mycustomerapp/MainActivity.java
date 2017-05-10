@@ -1,5 +1,6 @@
 package com.example.vprasanna.mycustomerapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 //            http://stackoverflow.com/questions/18079977/android-display-the-value-in-listview-dynamically-using-adaptor
             final ArrayAdapter<Customer> ListObject = new ListAdapterView(this,
                     android.R.layout.simple_expandable_list_item_1, customers);
+
+
             customerListView.setAdapter(ListObject);
             customerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -67,7 +70,11 @@ public class MainActivity extends AppCompatActivity {
                                         int position, long id) {
                     Customer slecteditem= customers.get(position);
                     Toast.makeText(getApplicationContext(), slecteditem.getName(), Toast.LENGTH_SHORT).show();
-
+                    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                    intent.putExtra("id", slecteditem.getId());
+                    intent.putExtra("name", slecteditem.getName());
+                    intent.putExtra("age", slecteditem.getAge());
+                    startActivity(intent);
                 }
             });
         } catch (InterruptedException e) {
