@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.vprasanna.mycustomerapp.async.AsyncDeleteData;
 import com.example.vprasanna.mycustomerapp.async.AsyncSaveData;
 import com.example.vprasanna.mycustomerapp.model.Customer;
 
@@ -24,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 public class DetailActivity extends AppCompatActivity {
 
     EditText id, name, age;
-    Button buttonBack, buttonSave;
+    Button buttonBack, buttonSave, buttonDelete;
     Customer customer;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,17 +34,36 @@ public class DetailActivity extends AppCompatActivity {
         age = (EditText) findViewById(R.id.detail_age);
         name = (EditText) findViewById(R.id.detail_name);
 
+        //This makes the  textbox readonly
         id.setKeyListener(null);
 
 
         buttonBack = (Button) findViewById(R.id.buttonBack);
         buttonSave = (Button) findViewById(R.id.buttonSave);
+        buttonDelete = (Button) findViewById(R.id.buttonDelete);
 
         customer = getCustomerFromIntent();
 
         buttonBack.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view) {
+                        Intent i = getIntent();
+                        // Setting resultCode to 100 to identify on old activity
+                        setResult(200, i);
+                        //close and get back
+                        finish();
+                    }
+                }
+        );
+
+        buttonDelete.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+                        //Delete the customer
+                        deleteCustomerData(getCustomerFromPage());
+                        Intent i = getIntent();
+                        // Setting resultCode to 100 to identify on old activity
+                        setResult(300, i);
                         //close and get back
                         finish();
                     }
@@ -54,6 +74,11 @@ public class DetailActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         //save the record
                         saveCustomerData(getCustomerFromPage());
+                        Intent i = getIntent();
+                        // Setting resultCode to 100 to identify on old activity
+                        setResult(100, i);
+                        //close and get back
+                        finish();
                     }
                 }
         );
@@ -103,8 +128,21 @@ public class DetailActivity extends AppCompatActivity {
 
         try {
             Customer c = new AsyncSaveData().execute(customer).get();
-            finish();
             Toast.makeText(getApplicationContext(), "Saving...", Toast.LENGTH_SHORT).show();
+            return c;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    Customer deleteCustomerData(Customer customer) {
+
+        try {
+            Customer c = new AsyncDeleteData().execute(customer.getId()).get();
+            Toast.makeText(getApplicationContext(), "Deleting " + customer.getName(), Toast.LENGTH_SHORT).show();
             return c;
         } catch (InterruptedException e) {
             e.printStackTrace();

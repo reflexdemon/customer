@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">MyCustomerApp</string>
-    <string name="getData">Fetch Data</string>
+    <string name="app_name">Customer</string>
+    <string name="getData">Refresh Data</string>
+    <string name="back">Back</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
 </resources>

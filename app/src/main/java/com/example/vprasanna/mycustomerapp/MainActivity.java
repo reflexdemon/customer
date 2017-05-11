@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "TODO: Not yet implemented.", Toast.LENGTH_SHORT).show();
+                switchToDetailView(null);
+//                Toast.makeText(getApplicationContext(), "TODO: Not yet implemented.", Toast.LENGTH_SHORT).show();
             }
         });
         getCustomerData();
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private void getCustomerData() {
         URL apiEndpoint = NetworkUtils.buildUrl();
         try {
+            Toast.makeText(getApplicationContext(), "Refresing the list", Toast.LENGTH_LONG).show();
             final List<Customer> customers = new AsyncFetchData().execute(apiEndpoint).get();
             List<String> names = new ArrayList<>();
 
@@ -80,12 +82,7 @@ public class MainActivity extends AppCompatActivity {
                                         int position, long id) {
                     Customer slecteditem= customers.get(position);
                     Toast.makeText(getApplicationContext(), slecteditem.getName(), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                    intent.putExtra("id", slecteditem.getId());
-                    intent.putExtra("name", slecteditem.getName());
-                    intent.putExtra("age", slecteditem.getAge());
-//                    startActivity(intent);
-                    startActivityForResult(intent, 100); // 100 is some code to identify the returning result
+                    switchToDetailView(slecteditem);
                 }
             });
         } catch (InterruptedException e) {
@@ -96,15 +93,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    void switchToDetailView(Customer slecteditem) {
+        Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+        if (null != slecteditem) {
+            intent.putExtra("id", slecteditem.getId());
+            intent.putExtra("name", slecteditem.getName());
+            intent.putExtra("age", slecteditem.getAge());
+        }
+//                    startActivity(intent);
+        startActivityForResult(intent, 100); // 100 is some code to identify the returning result
+    }
+
     @Override
     protected void onActivityResult(int requestCode,
                                     int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
-            Toast.makeText(getApplicationContext(), "Refresing the list", Toast.LENGTH_LONG).show();
+        if (resultCode == 100 || resultCode == 300) {
             getCustomerData();
-
-
         }
 
     }

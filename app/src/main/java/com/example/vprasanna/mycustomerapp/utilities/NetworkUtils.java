@@ -43,6 +43,7 @@ public class NetworkUtils {
 
     public static String HTTP_METHOD_POST = "POST";
     public static String HTTP_METHOD_PUT = "PUT";
+    public static String HTTP_METHOD_DELETE = "DELETE";
 
 
     public static URL buildUrl() {
