@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import static com.example.vprasanna.mycustomerapp.utilities.NetworkUtils.HTTP_METHOD_POST;
 import static com.example.vprasanna.mycustomerapp.utilities.NetworkUtils.HTTP_METHOD_PUT;
 import static com.example.vprasanna.mycustomerapp.utilities.NetworkUtils.buildUrl;
 import static com.example.vprasanna.mycustomerapp.utilities.NetworkUtils.executeWithPayload;
@@ -24,8 +25,16 @@ public class AsyncSaveData extends AsyncTask<Customer, Void, Customer> {
     @Override
     protected Customer doInBackground(Customer[] params) {
         Customer customer = params[0];
-        URL url = buildUrl(customer.getId());
-        String jsonData = executeWithPayload(HTTP_METHOD_PUT, url, customer);
+        String method = null;
+        URL url = null;
+        if (null == customer.getId() || customer.getId().trim().isEmpty()) {
+            url = buildUrl();
+            method = HTTP_METHOD_POST;
+        } else {
+            url = buildUrl(customer.getId());
+            method = HTTP_METHOD_PUT;
+        }
+        String jsonData = executeWithPayload(method, url, customer);
         try {
             return new ObjectMapper().readValue(jsonData, Customer.class);
         } catch (IOException e) {
