@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         customerListView = (ListView) findViewById(R.id.list);
+        getCustomerData();
     }
 
     @Override
@@ -74,13 +75,27 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("id", slecteditem.getId());
                     intent.putExtra("name", slecteditem.getName());
                     intent.putExtra("age", slecteditem.getAge());
-                    startActivity(intent);
+//                    startActivity(intent);
+                    startActivityForResult(intent, 100); // 100 is some code to identify the returning result
                 }
             });
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode,
+                                    int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 100) {
+            Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+            getCustomerData();
+
+
         }
 
     }

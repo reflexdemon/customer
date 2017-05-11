@@ -7,6 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.vprasanna.mycustomerapp.async.AsyncSaveData;
+import com.example.vprasanna.mycustomerapp.model.Customer;
+
+import static com.example.vprasanna.mycustomerapp.utilities.NetworkUtils.*;
+
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by vprasanna on 5/10/17.
@@ -15,8 +24,8 @@ import android.widget.EditText;
 public class DetailActivity extends AppCompatActivity {
 
     EditText id, name, age;
-    Button buttonBack;
-
+    Button buttonBack, buttonSave;
+    Customer customer;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.detail_view);
@@ -28,6 +37,10 @@ public class DetailActivity extends AppCompatActivity {
 
 
         buttonBack = (Button) findViewById(R.id.buttonBack);
+        buttonSave = (Button) findViewById(R.id.buttonSave);
+
+        customer = getCustomerFromIntent();
+
         buttonBack.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view) {
@@ -36,28 +49,70 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 }
         );
-        assignValuesToText();
+        buttonSave.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+                        //save the record
+                        saveCustomerData(getCustomerFromPage());
+                    }
+                }
+        );
+
+        assignValuesToText(customer);
         super.onCreate(savedInstanceState);
     }
 
-    void assignValuesToText() {
+    Customer getCustomerFromIntent() {
+        Customer customer = new Customer();
         Intent i = getIntent();
+        customer.setId(i.getStringExtra("id"));
+        customer.setName(i.getStringExtra("name"));
+        customer.setAge(i.getStringExtra("age"));
+        return customer;
 
-        if (id != null && i.getStringExtra("id") != null) {
-            id.setText(i.getStringExtra("id"));
+    }
+
+    Customer getCustomerFromPage() {
+        Customer customer = new Customer();
+        customer.setId(id.getText().toString());
+        customer.setName(name.getText().toString());
+        customer.setAge(age.getText().toString());
+        return customer;
+
+    }
+
+    void assignValuesToText(Customer customer) {
+
+
+        if (id != null) {
+            id.setText(customer.getId());
         }
 
-        if (name != null && i.getStringExtra("name") != null) {
-            name.setText(i.getStringExtra("name"));
+        if (name != null) {
+            name.setText(customer.getName());
         }
 
-        if (age != null && i.getStringExtra("age") != null) {
-            age.setText(i.getStringExtra("age"));
+        if (age != null) {
+            age.setText(customer.getAge());
         }
 
 
     }
 
+    Customer saveCustomerData(Customer customer) {
+
+        try {
+            Customer c = new AsyncSaveData().execute(customer).get();
+            finish();
+            Toast.makeText(getApplicationContext(), "Saving...", Toast.LENGTH_SHORT).show();
+            return c;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     @Override
     protected void onStart() {
         super.onStart();
