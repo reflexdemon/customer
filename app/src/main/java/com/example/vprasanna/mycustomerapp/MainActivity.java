@@ -1,6 +1,7 @@
 package com.example.vprasanna.mycustomerapp;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,12 +27,20 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
 
     private ListView customerListView = null;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         customerListView = (ListView) findViewById(R.id.list);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "TODO: Not yet implemented.", Toast.LENGTH_SHORT).show();
+            }
+        });
         getCustomerData();
     }
 
@@ -91,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode,
                                     int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 100) {
-            Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+        if (requestCode == 100) {
+            Toast.makeText(getApplicationContext(), "Refresing the list", Toast.LENGTH_LONG).show();
             getCustomerData();
 
 
