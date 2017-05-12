@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.ActionMenuItemView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 switchToDetailView(null);
-//                Toast.makeText(getApplicationContext(), "TODO: Not yet implemented.", Toast.LENGTH_SHORT).show();
             }
         });
         getCustomerData();
@@ -63,9 +63,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getCustomerData() {
-        URL apiEndpoint = NetworkUtils.buildUrl();
+        ActionMenuItemView item = (ActionMenuItemView) findViewById(R.id.action_search);
         try {
-            Toast.makeText(getApplicationContext(), "Refresing the list", Toast.LENGTH_LONG).show();
+            if (null != item) {
+                item.setEnabled(false);
+            }
+            URL apiEndpoint = NetworkUtils.buildUrl();
+            Toast.makeText(getApplicationContext(), "Refresing the list", Toast.LENGTH_SHORT).show();
             final List<Customer> customers = new AsyncFetchData().execute(apiEndpoint).get();
             List<String> names = new ArrayList<>();
 
@@ -73,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
             final ArrayAdapter<Customer> ListObject = new ListAdapterView(this,
                     android.R.layout.simple_expandable_list_item_1, customers);
 
-
+            if (null != item) {
+                item.setEnabled(true);
+            }
             customerListView.setAdapter(ListObject);
             customerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
