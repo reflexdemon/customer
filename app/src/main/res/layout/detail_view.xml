@@ -10,11 +10,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ID"
-        android:textSize="15dip"
-        android:textAlignment="center"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:text="ID"
+        android:textAlignment="textStart"
+        android:textSize="15dip" />
 
     <EditText
         android:id="@+id/detail_id"
@@ -29,11 +30,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="15dip"
-        android:textAlignment="center"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:text="Name"
+        android:textAlignment="textStart"
+        android:textSize="15dip" />
 
     <EditText
         android:id="@+id/detail_name"
@@ -48,11 +50,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Age"
-        android:textSize="15dip"
-        android:textAlignment="center"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:text="Age"
+        android:textAlignment="textStart"
+        android:textSize="15dip" />
 
     <EditText
         android:id="@+id/detail_age"
@@ -72,32 +75,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dip"
+            android:layout_weight="1"
             android:text="@string/back"
-            android:textSize="18dip"
-            android:layout_weight="1" />
+            android:textSize="14dip" />
 
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dip"
-            android:text="@string/save"
-            android:textSize="18dip"
-            android:textColor="@color/colorWhite"
             android:layout_weight="1"
+            android:background="@drawable/drawable_bg"
             android:drawableLeft="@android:drawable/ic_menu_save"
-            android:background="@drawable/drawable_bg" />
+            android:text="@string/save"
+            android:textColor="@color/colorWhite"
+            android:textSize="14dip" />
 
         <Button
             android:id="@+id/buttonDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dip"
-            android:text="@string/delete"
-            android:textSize="18dip"
-            android:textColor="@color/colorWhite"
             android:layout_weight="1"
+            android:background="@color/colorRed"
             android:drawableLeft="@android:drawable/ic_menu_delete"
-            android:background="@color/colorRed" />
+            android:text="@string/delete"
+            android:textColor="@color/colorWhite"
+            android:textSize="14dip" />
     </LinearLayout>
 </LinearLayout>

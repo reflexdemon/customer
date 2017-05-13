@@ -38,8 +38,12 @@ import java.util.Scanner;
  */
 public class NetworkUtils {
 
+    //    final static String BASE_URL =
+//            "http://demo-venkatvp.rhcloud.com/services/customer";
     final static String BASE_URL =
-            "http://demo-venkatvp.rhcloud.com/services/customer";
+            "https://reflexdemon-customer-v1.p.mashape.com/customer";
+
+    public static String MASHAPE_KEY = "pIWoS48nSGmsh8YuvhznZpRZTbCpp1rTRYYjsnmuBi0FoN2cXA";
 
     public static String HTTP_METHOD_POST = "POST";
     public static String HTTP_METHOD_PUT = "PUT";
@@ -81,8 +85,12 @@ public class NetworkUtils {
      * @throws IOException Related to network and stream reading
      */
     public static String getResponseFromHttpUrl(URL url) throws IOException {
+        Log.println(Log.INFO, "GET", "Endpoint: " + url);
+        long startTime = System.currentTimeMillis();
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        String response = null;
         try {
+            urlConnection.setRequestProperty("X-Mashape-Key", MASHAPE_KEY);
             InputStream in = urlConnection.getInputStream();
 
             Scanner scanner = new Scanner(in);
@@ -96,11 +104,13 @@ public class NetworkUtils {
             }
         } finally {
             urlConnection.disconnect();
+            Log.println(Log.INFO, "TIME", "It took " + (System.currentTimeMillis() - startTime) + "ms to complete operation.");
         }
     }
 
     public static String executeWithPayload(String menthod, URL url, Object payload) {
         Log.println(Log.INFO, menthod, "Endpoint: " + url);
+        long startTime = System.currentTimeMillis();
         HttpURLConnection httpcon;
         String result = null;
         try {
@@ -110,6 +120,7 @@ public class NetworkUtils {
             httpcon.setDoOutput(true);
             httpcon.setRequestProperty("Content-Type", "application/json");
             httpcon.setRequestProperty("Accept", "application/json");
+            httpcon.setRequestProperty("X-Mashape-Key", MASHAPE_KEY);
             httpcon.setRequestMethod(menthod);//"POST" or "PUT" as the case may be
             httpcon.connect();
 
@@ -137,6 +148,8 @@ public class NetworkUtils {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            Log.println(Log.INFO, "TIME", "It took " + (System.currentTimeMillis() - startTime) + "ms to complete operation.");
         }
 
         return result;

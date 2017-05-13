@@ -141,12 +141,12 @@ public class DetailActivity extends AppCompatActivity {
         return null;
     }
 
-    Customer deleteCustomerData(Customer customer) {
+    String deleteCustomerData(Customer customer) {
 
         try {
-            Customer c = new AsyncDeleteData().execute(customer.getId()).get();
-            Toast.makeText(getApplicationContext(), "Deleting " + customer.getName(), Toast.LENGTH_SHORT).show();
-            return c;
+            String cId = new AsyncDeleteData().execute(customer.getId()).get();
+            Toast.makeText(getApplicationContext(), "Deleting..." + customer.getName(), Toast.LENGTH_SHORT).show();
+            return cId;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

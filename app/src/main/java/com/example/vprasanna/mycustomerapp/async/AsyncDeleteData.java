@@ -1,6 +1,7 @@
 package com.example.vprasanna.mycustomerapp.async;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.vprasanna.mycustomerapp.model.Customer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,20 +20,18 @@ import static com.example.vprasanna.mycustomerapp.utilities.NetworkUtils.execute
  * Created by vprasanna on 5/8/17.
  */
 
-public class AsyncDeleteData extends AsyncTask<String, Void, Customer> {
+public class AsyncDeleteData extends AsyncTask<String, Void, String> {
     @Override
-    protected Customer doInBackground(String[] params) {
+    protected String doInBackground(String[] params) {
         String id = params[0];
         String method = null;
         URL url = null;
         url = buildUrl(id);
         method = HTTP_METHOD_DELETE;
-        String jsonData = executeWithPayload(method, url, null);
-        try {
-            return new ObjectMapper().readValue(jsonData, Customer.class);
-        } catch (IOException e) {
-            e.printStackTrace();
+        String deletedId = executeWithPayload(method, url, null);
+        if (null != id && deletedId.equals(deletedId)) {
+            Log.println(Log.INFO, "Delete", "Successfully deleted the customer");
         }
-        return null;
+        return deletedId;
     }
 }
