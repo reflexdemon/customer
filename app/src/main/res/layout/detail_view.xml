@@ -67,17 +67,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/buttonSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dip"
-        android:text="@string/save"
-        android:textSize="18dip"
-        android:textColor="@color/colorWhite"
-        android:layout_weight="1"
-        android:drawableLeft="@android:drawable/ic_menu_save"
-        android:background="@drawable/drawable_bg" />
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dip"
+            android:text="@string/back"
+            android:textSize="18dip"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dip"
+            android:text="@string/save"
+            android:textSize="18dip"
+            android:textColor="@color/colorWhite"
+            android:layout_weight="1"
+            android:drawableLeft="@android:drawable/ic_menu_save"
+            android:background="@drawable/drawable_bg" />
 
         <Button
             android:id="@+id/buttonDelete"
@@ -89,16 +98,6 @@
             android:textColor="@color/colorWhite"
             android:layout_weight="1"
             android:drawableLeft="@android:drawable/ic_menu_delete"
-            android:background="@color/colorAccent" />
-
-        <Button
-            android:id="@+id/buttonBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dip"
-            android:text="@string/back"
-            android:textSize="18dip"
-            android:layout_weight="1" />
-
+            android:background="@color/colorRed" />
     </LinearLayout>
 </LinearLayout>

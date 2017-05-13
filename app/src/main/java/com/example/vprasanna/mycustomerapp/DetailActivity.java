@@ -44,6 +44,7 @@ public class DetailActivity extends AppCompatActivity {
 
         customer = getCustomerFromIntent();
 
+
         buttonBack.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view) {
@@ -82,7 +83,9 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 }
         );
-
+        if (null == customer.getId()) {
+            buttonDelete.setVisibility(View.INVISIBLE);
+        }
         assignValuesToText(customer);
         super.onCreate(savedInstanceState);
     }
